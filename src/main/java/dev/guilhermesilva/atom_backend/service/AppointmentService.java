@@ -76,7 +76,7 @@ public class AppointmentService {
 
         return appointmentRepository
                 .findByStatusAndAppointmentDateTimeBetweenOrderByAppointmentDateTimeAsc(
-                        AppointmentStatus.SCHEDULED,
+                        AppointmentStatus.AGENDADO,
                         startOfDay,
                         endOfDay
                 )
@@ -89,15 +89,15 @@ public class AppointmentService {
     public AppointmentResponse cancel(Long id) {
         Appointment appointment = findAppointmentById(id);
 
-        if (appointment.getStatus() == AppointmentStatus.CANCELLED) {
+        if (appointment.getStatus() == AppointmentStatus.CANCELADO) {
             throw new BusinessException("Este agendamento já está cancelado.");
         }
 
-        if (appointment.getStatus() == AppointmentStatus.COMPLETED) {
+        if (appointment.getStatus() == AppointmentStatus.FINALIZADO) {
             throw new BusinessException("Um agendamento concluído não pode ser cancelado.");
         }
 
-        appointment.setStatus(AppointmentStatus.CANCELLED);
+        appointment.setStatus(AppointmentStatus.CANCELADO);
 
         Appointment updatedAppointment = appointmentRepository.save(appointment);
 
@@ -108,15 +108,15 @@ public class AppointmentService {
     public AppointmentResponse complete(Long id) {
         Appointment appointment = findAppointmentById(id);
 
-        if (appointment.getStatus() == AppointmentStatus.CANCELLED) {
+        if (appointment.getStatus() == AppointmentStatus.CANCELADO) {
             throw new BusinessException("Um agendamento cancelado não pode ser concluído.");
         }
 
-        if (appointment.getStatus() == AppointmentStatus.COMPLETED) {
+        if (appointment.getStatus() == AppointmentStatus.FINALIZADO) {
             throw new BusinessException("Este agendamento já está concluído.");
         }
 
-        appointment.setStatus(AppointmentStatus.COMPLETED);
+        appointment.setStatus(AppointmentStatus.FINALIZADO);
 
         Appointment updatedAppointment = appointmentRepository.save(appointment);
 
@@ -152,7 +152,7 @@ public class AppointmentService {
 
         List<Appointment> scheduledAppointments = appointmentRepository
                 .findByStatusAndAppointmentDateTimeBetweenOrderByAppointmentDateTimeAsc(
-                        AppointmentStatus.SCHEDULED,
+                        AppointmentStatus.AGENDADO,
                         startOfDay,
                         endOfDay
                 );

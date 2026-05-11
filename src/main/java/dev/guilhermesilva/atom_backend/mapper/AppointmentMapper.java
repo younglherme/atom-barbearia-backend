@@ -22,7 +22,7 @@ public class AppointmentMapper {
                 .customerPhone(request.getCustomerPhone().trim())
                 .appointmentDateTime(appointmentDateTime)
                 .serviceType(serviceType)
-                .status(AppointmentStatus.SCHEDULED)
+                .status(AppointmentStatus.AGENDADO)
                 .build();
     }
 
