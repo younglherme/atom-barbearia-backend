@@ -5,37 +5,43 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "barbers")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "barbeiros")
-public class Barbeiro {
+public class Barber {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String nome;
+    private String name;
 
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
-    private String senha;
+    private String password;
 
-    @Builder.Default
-    @Column(nullable = false)
-    private Boolean ativo = true;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime criadoEm;
+    private LocalDateTime updatedAt;
 
     @PrePersist
     public void prePersist() {
-        this.criadoEm = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 }
