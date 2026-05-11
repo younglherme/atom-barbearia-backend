@@ -1,6 +1,6 @@
 package dev.guilhermesilva.atom_backend.dto.request;
 
-import jakarta.validation.constraints.Future;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -23,8 +23,10 @@ public class AppointmentRequest {
     private Long serviceTypeId;
 
     @NotNull(message = "Appointment date is required")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate appointmentDate;
 
     @NotNull(message = "Appointment time is required")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime appointmentTime;
 }

@@ -45,11 +45,12 @@ public class Appointment {
     @PrePersist
     public void prePersist() {
         LocalDateTime now = LocalDateTime.now();
+
         this.createdAt = now;
         this.updatedAt = now;
 
         if (this.status == null) {
-            this.status = AppointmentStatus.SCHEDULED;
+            this.status = AppointmentStatus.AGENDADO;
         }
     }
 

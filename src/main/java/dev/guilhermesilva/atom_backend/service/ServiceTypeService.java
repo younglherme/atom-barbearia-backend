@@ -70,7 +70,7 @@ public class ServiceTypeService {
         ServiceType serviceType = getServiceTypeById(id);
 
         if (Boolean.FALSE.equals(serviceType.getActive())) {
-            throw new BusinessException("Service type is already inactive");
+            throw new BusinessException("O tipo de serviço já está inativo.");
         }
 
         serviceType.setActive(false);
@@ -79,14 +79,14 @@ public class ServiceTypeService {
 
     private ServiceType getServiceTypeById(Long id) {
         return serviceTypeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Service type not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Tipo de serviço não encontrado com o ID: " + id));
     }
 
     private void validateServiceTypeNameDoesNotExist(String name) {
         boolean exists = serviceTypeRepository.existsByNameIgnoreCase(name);
 
         if (exists) {
-            throw new BusinessException("Service type already exists with name: " + name);
+            throw new BusinessException("Já existe um tipo de serviço cadastrado com o nome: " + name);
         }
     }
 
@@ -94,7 +94,7 @@ public class ServiceTypeService {
         boolean exists = serviceTypeRepository.existsByNameIgnoreCaseAndIdNot(name, id);
 
         if (exists) {
-            throw new BusinessException("Another service type already exists with name: " + name);
+            throw new BusinessException("Já existe outro tipo de serviço utilizando o nome: " + name);
         }
     }
 }

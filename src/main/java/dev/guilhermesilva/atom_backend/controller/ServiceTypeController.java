@@ -4,6 +4,7 @@ import dev.guilhermesilva.atom_backend.dto.request.ServiceTypeRequest;
 import dev.guilhermesilva.atom_backend.dto.response.ServiceTypeResponse;
 import dev.guilhermesilva.atom_backend.service.ServiceTypeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,14 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/service-types")
 @RestController
+@RequestMapping("/api/service-types")
 @RequiredArgsConstructor
+@Tag(name = "Tipos de Serviço", description = "Gerenciamento dos tipos de serviços oferecidos")
 public class ServiceTypeController {
 
     private final ServiceTypeService serviceTypeService;
 
-    @Operation(summary = "Create a new service type")
+    @Operation(summary = "Cria um novo tipo de serviço")
     @PostMapping
     public ResponseEntity<ServiceTypeResponse> create(
             @Valid @RequestBody ServiceTypeRequest request
@@ -29,7 +31,7 @@ public class ServiceTypeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @Operation(summary = "Find all service types")
+    @Operation(summary = "Lista todos os tipos de serviço")
     @GetMapping
     public ResponseEntity<List<ServiceTypeResponse>> findAll() {
         List<ServiceTypeResponse> response = serviceTypeService.findAll();
@@ -37,7 +39,7 @@ public class ServiceTypeController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Find all active service types")
+    @Operation(summary = "Lista todos os tipos de serviço ativos")
     @GetMapping("/active")
     public ResponseEntity<List<ServiceTypeResponse>> findAllActive() {
         List<ServiceTypeResponse> response = serviceTypeService.findAllActive();
@@ -45,7 +47,7 @@ public class ServiceTypeController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Find service type by id")
+    @Operation(summary = "Busca um tipo de serviço pelo ID")
     @GetMapping("/{id}")
     public ResponseEntity<ServiceTypeResponse> findById(
             @PathVariable Long id
@@ -55,7 +57,7 @@ public class ServiceTypeController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Update service type by id")
+    @Operation(summary = "Atualiza um tipo de serviço pelo ID")
     @PutMapping("/{id}")
     public ResponseEntity<ServiceTypeResponse> update(
             @PathVariable Long id,
@@ -66,7 +68,7 @@ public class ServiceTypeController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Deactivate service type by id")
+    @Operation(summary = "Desativa um tipo de serviço pelo ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deactivate(
             @PathVariable Long id
